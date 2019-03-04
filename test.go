@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/therecipe/qt/core"
@@ -17,24 +16,19 @@ var (
 	imageFileName string
 )
 
-func testView() *widgets.QWidget {
+//TODO: create a backend and create a way to display data in columns for daily forecast
+
+func weatherView() *widgets.QWidget {
 	displayArea = widgets.NewQWidget(nil, 0)
-	var view = widgets.NewQTableView(nil)
-	var tabBar = widgets.NewQTabBar(nil)
+	var (
+		forecastLabel = widgets.NewQLabel2("Current Forecast", nil, core.Qt__Window)
+		layout        = widgets.NewQVBoxLayout()
+	)
 
-	var row = widgets.NewQRow
+	forecast.Insert
 
-	var button = widgets.NewQPushButton2("TEST", nil)
-	button.ConnectClicked(func(flag bool) {
-		widgets.QApplication_Beep()
-
-	})
-
-	var layout = widgets.NewQVBoxLayout()
-
-	layout.AddWidget(view, 0, core.Qt__AlignCenter)
-	layout.AddWidget(button, 0, core.Qt__AlignCenter)
-	layout.AddWidget(tabBar, 0, core.Qt__AlignCenter)
+	layout.AddWidget(forecastLabel, 0, core.Qt__AlignCenter)
+	layout.AddWidget(forecast, 0, core.Qt__AlignCenter)
 
 	displayArea.SetLayout(layout)
 
@@ -43,11 +37,9 @@ func testView() *widgets.QWidget {
 
 func main() {
 
-	fmt.Println("Loading image : ", imageFileName)
-
 	mainApp = widgets.NewQApplication(len(os.Args), os.Args)
 
-	testView().Show()
+	weatherView().Show()
 
 	widgets.QApplication_Exec()
 }
